@@ -1,0 +1,14 @@
+#
+# Copyright 2024, DornerWorks
+#
+# SPDX-License-Identifier: BSD-2-Clause
+#
+
+[workspace]
+default-members = []
+resolver ="2"
+members = [
+  "crates/eth_phy",
+  "crates/zynqmp_hal",
+  "crates/zynqmp_pac",
+]

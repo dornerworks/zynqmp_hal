@@ -1,0 +1,14 @@
+#
+# Copyright 2024, DornerWorks
+#
+# SPDX-License-Identifier: BSD-2-Clause
+#
+
+[package]
+name = "eth_phy"
+version = "0.1.0"
+edition = "2021"
+license = "BSD-2-Clause"
+
+[dependencies]
+tock-registers = "0.9.0"
