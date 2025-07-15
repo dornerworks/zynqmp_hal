@@ -21,6 +21,12 @@ pub struct Device<S> {
     phantom: PhantomData<S>,
 }
 
+// TODO: Should we seal this trait?
+pub trait ConfigRunning {}
+
+impl ConfigRunning for Config {}
+impl ConfigRunning for Running {}
+
 pub struct MacAddress([u8; 6]);
 
 pub struct Reset;
@@ -266,13 +272,6 @@ impl Device<Config> {
         (bottom, top)
     }
 
-    pub fn set_tx_desc(&self, desc: u32) {
-        self.transmit_q_ptr
-            .write(transmit_q_ptr::DMA_TX_Q_PTR.val(desc));
-        self.upper_tx_q_base_addr
-            .write(upper_tx_q_base_addr::UPPER_TX_Q_BASE_ADDR.val(0));
-    }
-
     pub fn set_tx_q1_desc(&self, desc: u32) {
         self.transmit_q1_ptr
             .write(transmit_q1_ptr::DMA_TX_Q_PTR.val(desc));
@@ -391,6 +390,15 @@ impl Device<Running> {
         let bottom = self.spec_add1_bottom.read(spec_add1_bottom::ADDRESS);
         let top = self.spec_add1_top.read(spec_add1_top::ADDRESS) as u16;
         MacAddress::from((bottom, top))
+    }
+}
+
+impl<S: ConfigRunning> Device<S> {
+    pub fn set_tx_desc(&self, desc: u32) {
+        self.transmit_q_ptr
+            .write(transmit_q_ptr::DMA_TX_Q_PTR.val(desc));
+        self.upper_tx_q_base_addr
+            .write(upper_tx_q_base_addr::UPPER_TX_Q_BASE_ADDR.val(0));
     }
 }
 
