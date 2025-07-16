@@ -355,13 +355,14 @@ impl Device<Running> {
         }
     }
 
-    pub fn transmit(&self) {
-        while self
-            .transmit_status
-            .matches_all(transmit_status::TRANSMIT_GO::SET)
-        {
+    pub fn wait_for_transmit_finish(&self) {
+        while self.transmit_status.is_set(transmit_status::TRANSMIT_GO) {
             core::hint::spin_loop();
         }
+    }
+
+    pub fn transmit(&self) {
+        self.wait_for_transmit_finish();
 
         self.network_control
             .modify(network_control::TX_START_PCLK::SET);
