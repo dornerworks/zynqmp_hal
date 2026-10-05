@@ -99,7 +99,7 @@ impl Device<Reset> {
             + dma_config::DMA_ADDR_BUS_WIDTH_1::CLEAR
             + dma_config::RX_PBUF_SIZE::PBUF_32KB
             + dma_config::TX_PBUF_SIZE::SET
-            // + dma_config::TX_PBUF_TCP_EN::SET
+            + dma_config::TX_PBUF_TCP_EN::SET
             + dma_config::ENDIAN_SWAP_PACKET::CLEAR
             + dma_config::AMBA_BURST_LENGTH.val(4u32);
 
