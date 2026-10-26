@@ -362,8 +362,6 @@ impl Device<Running> {
     }
 
     pub fn transmit(&self) {
-        self.wait_for_transmit_finish();
-
         self.network_control
             .modify(network_control::TX_START_PCLK::SET);
     }
